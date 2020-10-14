@@ -7,7 +7,7 @@ import { defaultAnchors } from '../middles/default.anchor';
 import { defaultIconRect, defaultTextRect } from '../middles/default.rect';
 import { text, iconfont } from '../middles/nodes/text';
 import { Store } from 'le5le-store';
-import { abs } from '../utils/math';
+import { abs, multiply } from '../utils/math';
 import { s8 } from '../utils/uuid';
 
 export const images: {
@@ -774,59 +774,59 @@ export class Node extends Pen {
     if (!center) {
       center = this.rect.center;
     }
-    this.rect.x = center.x - (center.x - this.rect.x) * scale;
-    this.rect.y = center.y - (center.y - this.rect.y) * scale;
-    this.z *= scale;
-    this.rect.width *= scale;
-    this.rect.height *= scale;
+    this.rect.x = multiply(center.x - (center.x - this.rect.x), scale);
+    this.rect.y = multiply(center.y - (center.y - this.rect.y) , scale);
+    this.z = multiply(this.z, scale);
+    this.rect.width = multiply(this.rect.width, scale) ;
+    this.rect.height = multiply(this.rect.height, scale) ;
     this.rect.ex = this.rect.x + this.rect.width;
     this.rect.ey = this.rect.y + this.rect.height;
     if (this.imageWidth) {
-      this.imageWidth *= scale;
+      this.imageWidth = multiply(this.imageWidth, scale);
     }
     if (this.imageHeight) {
-      this.imageHeight *= scale;
+      this.imageHeight = multiply(this.imageHeight, scale);
     }
     this.lastImage = null;
-    this.font.fontSize *= scale;
-    this.iconSize *= scale;
+    this.font.fontSize = multiply(this.font.fontSize, scale);
+    this.iconSize = multiply(this.iconSize, scale);
     if (typeof this.paddingLeft === 'number') {
-      this.paddingLeft *= scale;
+      this.paddingLeft = multiply(this.paddingLeft, scale);
     }
     if (typeof this.paddingTop === 'number') {
-      this.paddingTop *= scale;
+      this.paddingTop = multiply(this.paddingTop, scale);
     }
     if (typeof this.paddingRight === 'number') {
-      this.paddingRight *= scale;
+      this.paddingRight = multiply(this.paddingRight, scale);
     }
     if (typeof this.paddingBottom === 'number') {
-      this.paddingBottom *= scale;
+      this.paddingBottom = multiply(this.paddingBottom, scale);
     }
 
     if (this.rectInParent) {
       if (typeof this.rectInParent.x === 'number') {
-        this.rectInParent.x *= scale;
+      this.rectInParent.x = multiply(this.rectInParent.x, scale);
       }
       if (typeof this.rectInParent.y === 'number') {
-        this.rectInParent.y *= scale;
+      this.rectInParent.y = multiply(this.rectInParent.y, scale);
       }
       if (typeof this.rectInParent.width === 'number') {
-        this.rectInParent.width *= scale;
+      this.rectInParent.width = multiply(this.rectInParent.width, scale);
       }
       if (typeof this.rectInParent.height === 'number') {
-        this.rectInParent.height *= scale;
+      this.rectInParent.height = multiply(this.rectInParent.height, scale);
       }
       if (typeof this.rectInParent.marginLeft === 'number') {
-        this.rectInParent.marginLeft *= scale;
+      this.rectInParent.marginLeft = multiply(this.rectInParent.marginLeft, scale);
       }
       if (typeof this.rectInParent.marginTop === 'number') {
-        this.rectInParent.marginTop *= scale;
+      this.rectInParent.marginTop = multiply(this.rectInParent.marginTop, scale);
       }
       if (typeof this.rectInParent.marginRight === 'number') {
-        this.rectInParent.marginRight *= scale;
+      this.rectInParent.marginRight = multiply(this.rectInParent.marginRight, scale);
       }
       if (typeof this.rectInParent.marginBottom === 'number') {
-        this.rectInParent.marginBottom *= scale;
+      this.rectInParent.marginBottom = multiply(this.rectInParent.marginBottom, scale);
       }
     }
 

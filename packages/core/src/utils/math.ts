@@ -87,3 +87,34 @@ export function abs(num: number, percent: number | string): number {
 
   return (num * +percent) / 100;
 }
+
+export function isDecimal(num: number): boolean{
+  return String(num).indexOf('.')>-1
+}
+
+export function getFactor(num: number|string): number{
+  let factor = 1
+  if (isDecimal(Number(num))) {
+    num = String(num)
+    const dec1 = num.split('.')[1]
+    factor = Math.pow(10, dec1.length)
+  }
+  return factor
+}
+export function getFactorInNums(num1: number, num2: number): number{
+  let factor1 = getFactor(num1)
+  let factor2 = getFactor(num2)
+  if(factor1>factor2) return factor1
+  return factor2
+}
+
+export function multiply(num1: number, num2: number): number{
+  num1 = Number(num1)
+  num2 = Number(num2)
+  let m1 = getFactor(num1)
+  let m2 = getFactor(num2)
+  num1 *= m1
+  num2 *= m2
+  console.log(num1, num2, num1*num2/m1/m2)
+  return num1*num2/m1/m2
+}

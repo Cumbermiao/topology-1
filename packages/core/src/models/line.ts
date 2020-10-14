@@ -6,7 +6,7 @@ import { Store } from 'le5le-store';
 import { lineLen, curveLen } from '../utils/canvas';
 import { text } from '../middles/nodes/text';
 import { Rect } from './rect';
-import { abs } from '../utils/math';
+import { abs, multiply } from '../utils/math';
 
 export class Line extends Pen {
   from: Point;
@@ -462,18 +462,18 @@ export class Line extends Pen {
   }
 
   scale(scale: number, center: Point) {
-    this.from.x = center.x - (center.x - this.from.x) * scale;
-    this.from.y = center.y - (center.y - this.from.y) * scale;
-    this.to.x = center.x - (center.x - this.to.x) * scale;
-    this.to.y = center.y - (center.y - this.to.y) * scale;
+    this.from.x = multiply(center.x - (center.x - this.from.x) , scale) ;
+    this.from.y = multiply(center.y - (center.y - this.from.y) , scale);
+    this.to.x = multiply(center.x - (center.x - this.to.x) , scale);
+    this.to.y = multiply(center.y - (center.y - this.to.y) , scale);
     if (this.text && this.font && this.font.fontSize) {
-      this.font.fontSize *= scale;
+      this.font.fontSize = multiply(this.font.fontSize, scale);
       this.textRect = null;
     }
 
     for (const pt of this.controlPoints) {
-      pt.x = center.x - (center.x - pt.x) * scale;
-      pt.y = center.y - (center.y - pt.y) * scale;
+      pt.x = multiply(center.x - (center.x - pt.x) , scale);
+      pt.y = multiply(center.y - (center.y - pt.y) , scale);
     }
 
     Store.set(this.generateStoreKey('pts-') + this.id, null);
