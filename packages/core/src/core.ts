@@ -147,6 +147,7 @@ export class Topology {
         const json = event.dataTransfer.getData('Topology') || event.dataTransfer.getData('Text');
         if (!json) return;
         const obj = JSON.parse(json);
+        event.stopPropagation(); // fix: open new tab in firefox;
         event.preventDefault();
         this.dropNodes(Array.isArray(obj) ? obj : [obj], event.offsetX, event.offsetY);
       } catch {}
